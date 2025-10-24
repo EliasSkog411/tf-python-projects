@@ -1,0 +1,4 @@
+model_convert:
+	konvertera modeller från TF -> coreml
+python_model: 
+	random skit för att träna och testa tf modeller

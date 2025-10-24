@@ -1,0 +1,58 @@
+may run into unexpected errors. TensorFlow 2.12.0 is the most recent version that has been tested.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1749721221.347938 2293468 devices.cc:76] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 0 (Note: TensorFlow was not compiled with CUDA or ROCm support)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1749721221.348784 2293468 single_machine.cc:374] Starting new session
+I0000 00:00:1749721221.409988 2293468 devices.cc:76] Number of eligible GPUs (core count >= 8, compute capability >= 0.0): 0 (Note: TensorFlow was not compiled with CUDA or ROCm support)
+I0000 00:00:1749721221.410051 2293468 single_machine.cc:374] Starting new session
+Running TensorFlow Graph Passes:   0%|                                 | 0/6 [00:00<?, ? passes/s]I0000 00:00:1749721221.555343 2293468 mlir_graph_optimization_pass.cc:425] MLIR V1 optimization pass is not enabled
+Running TensorFlow Graph Passes: 100%|█████████████████████████| 6/6 [00:00<00:00, 88.64 passes/s]
+Converting TF Frontend ==> MIL Ops:  48%|██████████▏          | 32/66 [00:00<00:00, 1421.66 ops/s]
+Traceback (most recent call last):
+  File "/Users/Elias/Desktop/model_convert/conv2.py", line 17, in <module>
+    coreml_model = ct.convert(
+                   ^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/_converters_entry.py", line 635, in convert
+    mlmodel = mil_convert(
+              ^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/converter.py", line 186, in mil_convert
+    return _mil_convert(
+           ^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/converter.py", line 218, in _mil_convert
+    proto, mil_program = mil_convert_to_proto(
+                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/converter.py", line 294, in mil_convert_to_proto
+    prog = frontend_converter(model, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/converter.py", line 96, in __call__
+    return tf2_loader.load()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow/load.py", line 82, in load
+    program = self._program_from_tf_ssa()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow2/load.py", line 210, in _program_from_tf_ssa
+    return converter.convert()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow/converter.py", line 524, in convert
+    self.convert_main_graph(prog, graph)
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow/converter.py", line 421, in convert_main_graph
+    outputs = convert_graph(self.context, graph, self.output_names)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow/convert_utils.py", line 191, in convert_graph
+    add_op(context, node)
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/frontend/tensorflow/ops.py", line 2865, in ResizeBilinear
+    x = mb.upsample_bilinear(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/mil/ops/registry.py", line 183, in add_op
+    return cls._add_op(op_cls_to_add, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/mil/builder.py", line 208, in _add_op
+    kwargs.update(cls._create_vars(
+                  ^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/mil/builder.py", line 185, in _create_vars
+    var = cls._add_const(val, new_var_name, before_op)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Elias/Desktop/model_convert/lib/python3.12/site-packages/coremltools/converters/mil/mil/builder.py", line 122, in _add_const
+    raise ValueError(err_msg)
+ValueError: Cannot add const 512.0001/is1
+Python native vals (list, tuple), np.array that are operation inputs cannot have symbolic values. Consider feeding symbolic shape in through placeholder and use mb.shape() operator. Input StatefulPartitionedCall/functional_1/lambda_1/resize/ResizeBilinear_channel_first_upsample_bilinear_scale_factor_height: 512.0001/is1
